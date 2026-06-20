@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { echarts } from "@/lib/echarts";
 import { getChartTheme } from "@/lib/chart-theme";
 
@@ -9,6 +10,7 @@ interface Props {
 }
 
 export function CorrelationMatrix({ labels, matrix, height = 500 }: Props) {
+  const { t } = useTranslation();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -102,7 +104,7 @@ export function CorrelationMatrix({ labels, matrix, height = 500 }: Props) {
   }, [labels, matrix]);
 
   if (labels.length === 0) {
-    return <div className="text-muted-foreground text-sm p-4">No correlation data</div>;
+    return <div className="text-muted-foreground text-sm p-4">{t("charts.noCorrelationData")}</div>;
   }
   return <div ref={ref} style={{ height }} />;
 }

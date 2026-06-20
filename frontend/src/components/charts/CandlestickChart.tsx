@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 import type { PriceBar, TradeMarker, IndicatorPoint } from "@/lib/api";
@@ -33,6 +34,7 @@ interface Props {
 }
 
 export function CandlestickChart({ data, markers, indicators, height = 500 }: Props) {
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<ReturnType<typeof echarts.init> | null>(null);
   const [sub, setSub] = useState<Sub>("vol");
@@ -255,7 +257,7 @@ export function CandlestickChart({ data, markers, indicators, height = 500 }: Pr
   }, [data, markers, baseData, indicatorCache, extraIndicators, sub, range, overlays, dark]);
 
   if (data.length === 0) {
-    return <div className="text-muted-foreground text-sm p-4">No price data</div>;
+    return <div className="text-muted-foreground text-sm p-4">{t("charts.noPriceData")}</div>;
   }
 
   return (
